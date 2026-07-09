@@ -51,14 +51,18 @@ const faturamentos = [
       </div>
 
       <div class="flex items-center justify-center gap-4 border-t border-white/60 pt-5 lg:justify-start">
-        <img
-          src="/images/cta/avatars.webp"
-          alt=""
-          aria-hidden="true"
-          width="122"
-          height="44"
-          class="h-11 w-auto"
-        />
+        <div class="flex shrink-0" aria-hidden="true">
+          {[1, 2, 3, 4].map((n) => (
+            <img
+              src={`/images/cta/avatar-${n}.webp`}
+              alt=""
+              width="128"
+              height="128"
+              loading="lazy"
+              class="-mr-4 size-[42px] rounded-full border border-lemon object-cover last:mr-0"
+            />
+          ))}
+        </div>
         <p class="max-w-[188px] text-left text-base font-medium leading-[1.5] text-white">
           Método validado em <strong class="font-bold">mais de 200 empresas.</strong>
         </p>
