@@ -2,8 +2,8 @@
 
 export const mainNav = [
   { href: '/', label: 'Início' },
-  { href: '#servicos', label: 'Serviços', hasDropdown: true },
-  { href: '#sobre', label: 'Sobre nós' },
+  { href: '/#servicos', label: 'Serviços', hasDropdown: true },
+  { href: '/sobre', label: 'Sobre nós' },
   { href: '#carreiras', label: 'Carreiras' },
   { href: '#blog', label: 'Blog' },
 ];
@@ -24,7 +24,7 @@ export const footerColumns = [
   {
     title: 'Institucional',
     links: [
-      { href: '#sobre', label: 'Sobre nós' },
+      { href: '/sobre', label: 'Sobre nós' },
       { href: '#contato', label: 'Contato' },
       { href: '#carreiras', label: 'Trabalhe conosco' },
       { href: '#privacidade', label: 'Política de privacidade' },

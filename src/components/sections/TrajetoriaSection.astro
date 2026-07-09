@@ -1,0 +1,143 @@
+---
+import ArrowLeft from '../icons/ArrowLeft.astro';
+import ArrowRight from '../icons/ArrowRight.astro';
+
+const steps = [
+  {
+    title: 'Nascemos da tecnologia',
+    body: 'A Salestime surgiu como uma plataforma de CRM, ajudando empresas a organizar seus processos e operações comerciais.',
+  },
+  {
+    title: 'Encontramos o desafio real',
+    body: 'Ao trabalhar com diferentes equipes de vendas, percebemos que os maiores desafios não estavam nas ferramentas, mas na falta de uma estratégia capaz de transformar todo esforço em resultado.',
+  },
+  {
+    title: 'Transformamos experiência em método',
+    body: 'Passamos a atuar diretamente na estruturação de operações comerciais, consolidando uma metodologia própria validada em mais de 200 empresas.',
+  },
+  {
+    title: 'Nos tornamos uma aceleradora de vendas',
+    body: 'Hoje, ajudamos empresas B2B a construir operações comerciais previsíveis através da combinação de estratégia, tecnologia, execução e capacitação de equipes.',
+  },
+];
+---
+
+<section id="trajetoria" class="border-t border-gray-50 bg-white py-16 lg:py-20" data-traj>
+  <div class="shell flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-20">
+    <!-- Heading + setas -->
+    <div class="flex w-full flex-col gap-6 lg:w-[385px] lg:shrink-0">
+      <div class="flex flex-col gap-4">
+        <p class="eyebrow eyebrow--lg text-blue-300">A Salestime</p>
+        <h2 class="text-[24px] font-semibold leading-[1.4] text-blue-900 lg:text-[32px]">
+          Conheça nossa trajetória
+        </h2>
+        <p class="body">
+          Do desenvolvimento de um CRM à aceleração comercial de centenas de
+          empresas, nossa história foi construída lado a lado com os desafios
+          reais do mercado.
+        </p>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          type="button"
+          data-traj-prev
+          aria-label="Etapa anterior"
+          class="flex size-10 items-center justify-center rounded-full bg-blue-600 text-white transition-opacity disabled:cursor-default disabled:opacity-20"
+        >
+          <ArrowLeft class="h-6 w-6" />
+        </button>
+        <button
+          type="button"
+          data-traj-next
+          aria-label="Próxima etapa"
+          class="flex size-10 items-center justify-center rounded-full bg-blue-600 text-white transition-opacity disabled:cursor-default disabled:opacity-20"
+        >
+          <ArrowRight class="h-6 w-6" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Carrossel: no desktop os cards vazam até a borda direita da viewport -->
+    <div class="min-w-0 flex-1 lg:mr-[calc((min(1200px,100vw)-100vw)/2)]">
+      <ul
+        data-traj-track
+        data-carousel-track
+        class="-mx-5 flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-5 [scrollbar-width:none] lg:mx-0 lg:gap-[31px] lg:px-0 [&::-webkit-scrollbar]:hidden"
+      >
+        {steps.map((step, i) => (
+          <li class="flex w-[calc(100vw-40px)] max-w-[375px] shrink-0 snap-start lg:w-[375px]">
+            <article class:list={['traj-card flex flex-col gap-10 rounded-3xl p-8', i === 0 && 'is-active']}>
+              <span class="flex size-10 items-center justify-center rounded-full bg-lemon text-xl font-bold text-blue-300" aria-hidden="true">
+                {i + 1}
+              </span>
+              <div class="flex flex-col gap-3.5">
+                <h3 class="traj-title text-2xl font-semibold leading-[1.3]">{step.title}</h3>
+                <p class="traj-body text-base font-medium leading-[1.5]">{step.body}</p>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .traj-card {
+    background-color: var(--color-gray-50);
+    transition: background-color 0.3s ease;
+  }
+  .traj-card .traj-title {
+    color: var(--color-blue-900);
+    transition: color 0.3s ease;
+  }
+  .traj-card .traj-body {
+    color: var(--color-gray-900);
+    transition: color 0.3s ease;
+  }
+  .traj-card.is-active {
+    background-color: var(--color-blue-600);
+  }
+  .traj-card.is-active .traj-title,
+  .traj-card.is-active .traj-body {
+    color: var(--color-white);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-traj]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-traj-track]');
+    const prev = root.querySelector<HTMLButtonElement>('[data-traj-prev]');
+    const next = root.querySelector<HTMLButtonElement>('[data-traj-next]');
+    if (!track || !prev || !next) return;
+    const cards = [...track.querySelectorAll<HTMLElement>('.traj-card')];
+
+    const step = () => {
+      const first = track.querySelector<HTMLElement>('li');
+      if (!first) return 0;
+      const gap = parseFloat(getComputedStyle(track).columnGap || '0');
+      return first.offsetWidth + gap;
+    };
+
+    const update = () => {
+      const i = Math.min(cards.length - 1, Math.round(track.scrollLeft / step()));
+      cards.forEach((card, j) => card.classList.toggle('is-active', j === i));
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+    };
+
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+
+    let raf = 0;
+    track.addEventListener(
+      'scroll',
+      () => {
+        if (!raf) raf = requestAnimationFrame(() => { raf = 0; update(); });
+      },
+      { passive: true }
+    );
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  });
+</script>

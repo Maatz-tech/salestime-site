@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SobreHeroSection from '../components/sections/SobreHeroSection.astro';
+import LogosSection from '../components/sections/LogosSection.astro';
+import TrajetoriaSection from '../components/sections/TrajetoriaSection.astro';
+import FounderSection from '../components/sections/FounderSection.astro';
+import YoutubeSection from '../components/sections/YoutubeSection.astro';
+import NewsletterSection from '../components/sections/NewsletterSection.astro';
+import DiagnosticModal from '../components/DiagnosticModal.astro';
+---
+
+<Base
+  title="Sobre nós — Salestime"
+  description="Um time apaixonado por impulsionar as vendas do seu negócio. Conheça a trajetória da Salestime, da plataforma de CRM à aceleradora de vendas B2B."
+>
+  <Header />
+  <main id="main">
+    <SobreHeroSection />
+    <LogosSection />
+    <TrajetoriaSection />
+    <FounderSection />
+    <YoutubeSection />
+    <NewsletterSection />
+  </main>
+  <Footer />
+  <DiagnosticModal />
+</Base>

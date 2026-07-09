@@ -1,0 +1,88 @@
+---
+import EyebrowBadge from '../EyebrowBadge.astro';
+import ArrowRight from '../icons/ArrowRight.astro';
+
+const channelUrl = 'https://www.youtube.com/@salestime';
+---
+
+<section
+  class="relative overflow-hidden"
+  style="background-image: linear-gradient(269deg, #18137b 0.24%, #0a0755 99.76%)"
+>
+  <!-- Swoosh decorativo de fundo -->
+  <img
+    src="/images/sobre/yt-bg.svg"
+    alt=""
+    aria-hidden="true"
+    width="1290"
+    height="1218"
+    class="pointer-events-none absolute left-[-47px] top-[-126px] w-[1278px] max-w-none"
+  />
+
+  <div class="shell relative flex flex-col gap-10 py-16 lg:flex-row lg:items-center lg:gap-0 lg:py-20">
+    <!-- Conteúdo -->
+    <div class="flex flex-col items-start gap-8 lg:min-h-[345px] lg:w-[493px] lg:shrink-0">
+      <div class="flex flex-col gap-5">
+        <div class="flex items-center gap-3">
+          <EyebrowBadge tone="accent" icon="play" />
+          <p class="eyebrow eyebrow--lg text-lemon">Salestime no YouTube</p>
+        </div>
+        <h2 class="text-[24px] font-semibold leading-[1.3] text-white lg:text-[40px]">
+          Conteúdo prático para quem quer vender mais
+        </h2>
+      </div>
+
+      <div class="flex items-center gap-6 lg:gap-8">
+        <div class="flex flex-col gap-2">
+          <p class="text-[28px] font-bold leading-[1.5] text-lemon lg:text-[32px]">+750 mil</p>
+          <p class="text-base font-medium leading-[1.5] text-white">Visualizações no YouTube</p>
+        </div>
+        <span class="h-20 w-px shrink-0 bg-on-dark-40" aria-hidden="true"></span>
+        <div class="flex flex-col gap-2">
+          <p class="text-[28px] font-bold leading-[1.5] text-lemon lg:text-[32px]">+70 mil</p>
+          <p class="text-base font-medium leading-[1.5] text-white">Horas de exibição</p>
+        </div>
+      </div>
+
+      <a
+        href={channelUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn bg-white pl-6 pr-2.5 py-2.5 text-lg font-semibold text-blue-600"
+      >
+        Acessar canal
+        <span class="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
+          <ArrowRight class="h-[18px] w-[18px]" />
+        </span>
+      </a>
+    </div>
+
+    <!-- Mockups do canal (âncora no rodapé da seção no desktop; escala reduzida no mobile) -->
+    <div class="relative -mx-5 h-[225px] overflow-hidden lg:static lg:mx-0 lg:h-auto lg:flex-1 lg:overflow-visible">
+      <div class="absolute left-1.5 top-0 h-[426px] w-[759px] origin-top-left scale-[0.66] lg:left-auto lg:right-0 lg:top-auto lg:bottom-0 lg:origin-bottom-right lg:scale-75 xl:scale-100">
+        <!-- Mock desktop -->
+        <div class="absolute bottom-0 right-0 rounded-tl-[32px] bg-blue-300/10 pl-3 pt-3.5">
+          <img
+            src="/images/sobre/yt-desktop.webp"
+            alt="Canal Salestime — Vendas Consultivas no YouTube"
+            width="1246"
+            height="886"
+            loading="lazy"
+            class="h-[412px] w-[623px] max-w-none rounded-tl-3xl bg-white object-cover object-top"
+          />
+        </div>
+        <!-- Mock mobile -->
+        <div class="absolute bottom-0 left-0 rounded-t-[32px] bg-blue-300/10 px-3 pt-3.5">
+          <img
+            src="/images/sobre/yt-mobile.webp"
+            alt="Canal Salestime no YouTube em um celular"
+            width="440"
+            height="954"
+            loading="lazy"
+            class="h-[303px] w-[220px] max-w-none rounded-t-3xl bg-white object-cover object-top"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

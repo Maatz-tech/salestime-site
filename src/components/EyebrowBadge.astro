@@ -1,23 +1,27 @@
 ---
 import Filter from './icons/Filter.astro';
+import Play from './icons/Play.astro';
 
 interface Props {
   // brand = fundo claro (hero) · accent = fundo escuro (CTA)
   tone?: 'brand' | 'accent';
+  icon?: 'filter' | 'play';
   class?: string;
 }
-const { tone = 'brand', class: className = '' } = Astro.props;
+const { tone = 'brand', icon = 'filter', class: className = '' } = Astro.props;
 
 const styles =
   tone === 'brand'
     ? { ring: 'border-blue-600', fill: 'bg-blue-600', icon: 'text-lemon' }
     : { ring: 'border-lemon', fill: 'bg-lemon', icon: 'text-blue-300' };
+const Icon = icon === 'play' ? Play : Filter;
+const iconSize = icon === 'play' ? 'h-3 w-3' : 'h-2 w-2';
 ---
 <span class:list={['relative block h-6 w-[35px] shrink-0', className]} aria-hidden="true">
   <!-- Elipse 1: contorno, transparente -->
   <span class:list={['absolute left-0 top-0 size-6 rounded-full border', styles.ring]}></span>
-  <!-- Elipse 2: preenchida, deslocada, com o ícone de funil -->
+  <!-- Elipse 2: preenchida, deslocada, com o ícone -->
   <span class:list={['absolute right-0 top-0 flex size-6 items-center justify-center rounded-full', styles.fill]}>
-    <Filter class={`h-2 w-2 ${styles.icon}`} />
+    <Icon class={`${iconSize} ${styles.icon}`} />
   </span>
 </span>

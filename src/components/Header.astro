@@ -4,6 +4,10 @@ import ChevronDown from './icons/ChevronDown.astro';
 import MenuIcon from './icons/Menu.astro';
 import Close from './icons/Close.astro';
 import { mainNav, ctaLabel, ctaHref } from '../data/site';
+
+// Link ativo pela rota atual (links de âncora nunca ficam ativos fora da home)
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => href === path;
 ---
 
 <header
@@ -29,7 +33,7 @@ import { mainNav, ctaLabel, ctaHref } from '../data/site';
           href={link.href}
           class:list={[
             'inline-flex items-center gap-[7px] text-sm transition-colors hover:text-blue-600',
-            link.label === 'Início' ? 'font-semibold text-blue-600' : 'font-medium text-gray-900',
+            isActive(link.href) ? 'font-semibold text-blue-600' : 'font-medium text-gray-900',
           ]}
         >
           {link.label}
@@ -64,7 +68,7 @@ import { mainNav, ctaLabel, ctaHref } from '../data/site';
           href={link.href}
           class:list={[
             'rounded-lg px-2 py-3 text-base transition-colors hover:bg-blue-100/20',
-            link.label === 'Início' ? 'font-semibold text-blue-600' : 'font-medium text-gray-900',
+            isActive(link.href) ? 'font-semibold text-blue-600' : 'font-medium text-gray-900',
           ]}
         >
           {link.label}
