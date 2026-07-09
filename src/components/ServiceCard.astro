@@ -6,31 +6,14 @@ interface Props {
   title: string;
   description: string;
   href?: string;
-  active?: boolean; // no mobile, destaca o card em navy (Figma); no desktop volta ao padrão branco + hover
+  active?: boolean; // estado inicial; o carrossel move o destaque via .is-active
 }
 const { number, title, description, href = '#', active = false } = Astro.props;
-
-// Estado "ativo" = navy só no mobile; a partir de lg reverte para branco com hover
-const cardBg = active
-  ? 'bg-blue-600 lg:bg-white lg:hover:bg-blue-600'
-  : 'bg-white hover:bg-blue-600';
-const titleColor = active
-  ? 'text-white lg:text-blue-900 lg:group-hover:text-white'
-  : 'text-blue-900 group-hover:text-white';
-const descColor = active
-  ? 'text-white lg:text-gray-900 lg:group-hover:text-white'
-  : 'text-gray-900 group-hover:text-white';
-const btnBorder = active
-  ? 'border-blue-600 lg:border-gray-100 lg:group-hover:border-blue-600'
-  : 'border-gray-100 group-hover:border-blue-600';
-const arrowState = active
-  ? 'bg-blue-600 text-white lg:bg-gray-50 lg:text-blue-600 lg:group-hover:bg-blue-600 lg:group-hover:text-white'
-  : 'bg-gray-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white';
 ---
 <article
   class:list={[
-    'group flex w-[300px] shrink-0 snap-start flex-col gap-12 rounded-3xl p-8 transition-colors duration-300 sm:w-[340px] lg:w-[375px]',
-    cardBg,
+    'svc-card flex w-[300px] shrink-0 snap-start flex-col gap-12 rounded-3xl p-8 sm:w-[340px] lg:w-[375px]',
+    active && 'is-active',
   ]}
 >
   <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-lemon text-xl font-bold text-blue-300">
@@ -38,29 +21,58 @@ const arrowState = active
   </span>
 
   <div class="flex flex-col gap-3.5">
-    <h3 class:list={['text-2xl font-semibold leading-[1.3] transition-colors duration-300', titleColor]}>
-      {title}
-    </h3>
-    <p class:list={['text-base font-medium leading-[1.5] transition-colors duration-300', descColor]}>
-      {description}
-    </p>
+    <h3 class="svc-title text-2xl font-semibold leading-[1.3]">{title}</h3>
+    <p class="svc-desc text-base font-medium leading-[1.5]">{description}</p>
   </div>
 
-  <a
-    href={href}
-    class:list={[
-      'btn mt-auto self-start border bg-white py-2.5 pl-6 pr-2.5 text-lg text-blue-600 transition-colors duration-300',
-      btnBorder,
-    ]}
-  >
+  <a href={href} class="svc-btn btn mt-auto self-start border bg-white py-2.5 pl-6 pr-2.5 text-lg text-blue-600">
     Saiba mais
-    <span
-      class:list={[
-        'inline-flex size-8 shrink-0 items-center justify-center rounded-full transition-colors duration-300',
-        arrowState,
-      ]}
-    >
+    <span class="svc-arrow inline-flex size-8 shrink-0 items-center justify-center rounded-full">
       <ArrowRight class="h-[18px] w-[18px]" />
     </span>
   </a>
 </article>
+
+<style>
+  /* Card ativo (navegação do carrossel) e hover compartilham o mesmo visual navy */
+  .svc-card {
+    background-color: var(--color-white);
+    transition: background-color 0.3s ease;
+  }
+  .svc-title {
+    color: var(--color-blue-900);
+    transition: color 0.3s ease;
+  }
+  .svc-desc {
+    color: var(--color-gray-900);
+    transition: color 0.3s ease;
+  }
+  .svc-btn {
+    border-color: var(--color-gray-100);
+    transition: border-color 0.3s ease;
+  }
+  .svc-arrow {
+    background-color: var(--color-gray-50);
+    color: var(--color-blue-600);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .svc-card.is-active,
+  .svc-card:hover {
+    background-color: var(--color-blue-600);
+  }
+  .svc-card.is-active .svc-title,
+  .svc-card:hover .svc-title,
+  .svc-card.is-active .svc-desc,
+  .svc-card:hover .svc-desc {
+    color: var(--color-white);
+  }
+  .svc-card.is-active .svc-btn,
+  .svc-card:hover .svc-btn {
+    border-color: var(--color-blue-600);
+  }
+  .svc-card.is-active .svc-arrow,
+  .svc-card:hover .svc-arrow {
+    background-color: var(--color-blue-600);
+    color: var(--color-white);
+  }
+</style>

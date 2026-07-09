@@ -50,7 +50,7 @@ const services = [
           type="button"
           data-carousel-prev
           aria-label="Serviço anterior"
-          class="flex size-10 items-center justify-center rounded-full bg-blue-600 text-white opacity-20 transition-opacity enabled:hover:opacity-100 disabled:cursor-not-allowed"
+          class="flex size-10 items-center justify-center rounded-full bg-blue-600 text-white transition-opacity disabled:cursor-default disabled:opacity-20"
         >
           <ArrowLeft class="h-6 w-6" />
         </button>
@@ -58,7 +58,7 @@ const services = [
           type="button"
           data-carousel-next
           aria-label="Próximo serviço"
-          class="flex size-10 items-center justify-center rounded-full bg-blue-600 text-white transition-opacity hover:opacity-90 disabled:opacity-20"
+          class="flex size-10 items-center justify-center rounded-full bg-blue-600 text-white transition-opacity disabled:cursor-default disabled:opacity-20"
         >
           <ArrowRight class="h-6 w-6" />
         </button>
@@ -68,7 +68,7 @@ const services = [
     <!-- Carrossel -->
     <div
       data-carousel-track
-      class="-mx-5 flex min-w-0 flex-1 cursor-grab gap-[31px] overflow-x-auto px-5 pb-2 select-none active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:px-0"
+      class="-mx-5 flex min-w-0 flex-1 cursor-grab snap-x snap-mandatory gap-[31px] overflow-x-auto scroll-pl-5 px-5 pb-2 select-none active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:scroll-pl-0 lg:px-0"
     >
       {services.map((s, i) => (
         <ServiceCard number={s.number} title={s.title} description={s.description} active={i === 0} />
@@ -84,32 +84,26 @@ const services = [
     const next = section.querySelector<HTMLButtonElement>('[data-carousel-next]');
     if (!track || !prev || !next) return;
 
+    const cards = [...track.querySelectorAll<HTMLElement>('article')];
+
     const step = () => {
       const card = track.querySelector<HTMLElement>('article');
       const gap = parseFloat(getComputedStyle(track).columnGap || '31') || 31;
       return (card?.offsetWidth ?? 375) + gap;
     };
 
-    const FADE = 64; // px de esvaecimento nas bordas
     const update = () => {
       const max = track.scrollWidth - track.clientWidth - 1;
-      const atStart = track.scrollLeft <= 0;
       const atEnd = track.scrollLeft >= max;
-      prev.disabled = atStart;
+      prev.disabled = track.scrollLeft <= 4;
       next.disabled = atEnd;
 
-      // Fade nas bordas só no desktop; no mobile o track sangra até 100vw (sem fade)
-      const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-      if (isDesktop) {
-        const left = atStart ? 0 : FADE;
-        const right = atEnd ? 0 : FADE;
-        const mask = `linear-gradient(to right, transparent 0, #000 ${left}px, #000 calc(100% - ${right}px), transparent 100%)`;
-        track.style.webkitMaskImage = mask;
-        track.style.maskImage = mask;
-      } else {
-        track.style.webkitMaskImage = 'none';
-        track.style.maskImage = 'none';
-      }
+      // Card ativo acompanha o scroll; no fim do track o último assume o
+      // destaque (o scroll para antes da posição de snap dele)
+      const i = atEnd
+        ? cards.length - 1
+        : Math.min(cards.length - 1, Math.round(track.scrollLeft / step()));
+      cards.forEach((card, j) => card.classList.toggle('is-active', j === i));
     };
 
     prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
@@ -142,6 +136,12 @@ const services = [
       try {
         track.releasePointerCapture(e.pointerId);
       } catch {}
+      // Arraste via JS não dispara o scroll-snap nativo; encaixa no card mais próximo
+      if (moved) {
+        const max = track.scrollWidth - track.clientWidth;
+        const target = Math.min(max, Math.round(track.scrollLeft / step()) * step());
+        track.scrollTo({ left: target, behavior: 'smooth' });
+      }
       update();
     };
     track.addEventListener('pointerup', endDrag);

@@ -62,7 +62,7 @@ const steps = [
       <ul
         data-traj-track
         data-carousel-track
-        class="-mx-5 flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-5 [scrollbar-width:none] lg:mx-0 lg:gap-[31px] lg:px-0 [&::-webkit-scrollbar]:hidden"
+        class="-mx-5 flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto scroll-pl-5 px-5 [scrollbar-width:none] lg:mx-0 lg:gap-[31px] lg:scroll-pl-0 lg:px-0 [&::-webkit-scrollbar]:hidden"
       >
         {steps.map((step, i) => (
           <li class="flex w-[calc(100vw-40px)] max-w-[375px] shrink-0 snap-start lg:w-[375px]">
@@ -120,10 +120,15 @@ const steps = [
     };
 
     const update = () => {
-      const i = Math.min(cards.length - 1, Math.round(track.scrollLeft / step()));
+      const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      // No fim do track o último card assume o destaque (o scroll para antes
+      // da posição de snap dele)
+      const i = atEnd
+        ? cards.length - 1
+        : Math.min(cards.length - 1, Math.round(track.scrollLeft / step()));
       cards.forEach((card, j) => card.classList.toggle('is-active', j === i));
       prev.disabled = track.scrollLeft <= 4;
-      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      next.disabled = atEnd;
     };
 
     prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
