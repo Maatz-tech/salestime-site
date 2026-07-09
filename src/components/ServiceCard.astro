@@ -1,0 +1,66 @@
+---
+import ArrowRight from './icons/ArrowRight.astro';
+
+interface Props {
+  number: number;
+  title: string;
+  description: string;
+  href?: string;
+  active?: boolean; // no mobile, destaca o card em navy (Figma); no desktop volta ao padrão branco + hover
+}
+const { number, title, description, href = '#', active = false } = Astro.props;
+
+// Estado "ativo" = navy só no mobile; a partir de lg reverte para branco com hover
+const cardBg = active
+  ? 'bg-blue-600 lg:bg-white lg:hover:bg-blue-600'
+  : 'bg-white hover:bg-blue-600';
+const titleColor = active
+  ? 'text-white lg:text-blue-900 lg:group-hover:text-white'
+  : 'text-blue-900 group-hover:text-white';
+const descColor = active
+  ? 'text-white lg:text-gray-900 lg:group-hover:text-white'
+  : 'text-gray-900 group-hover:text-white';
+const btnBorder = active
+  ? 'border-blue-600 lg:border-gray-100 lg:group-hover:border-blue-600'
+  : 'border-gray-100 group-hover:border-blue-600';
+const arrowState = active
+  ? 'bg-blue-600 text-white lg:bg-gray-50 lg:text-blue-600 lg:group-hover:bg-blue-600 lg:group-hover:text-white'
+  : 'bg-gray-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white';
+---
+<article
+  class:list={[
+    'group flex w-[300px] shrink-0 snap-start flex-col gap-12 rounded-3xl p-8 transition-colors duration-300 sm:w-[340px] lg:w-[375px]',
+    cardBg,
+  ]}
+>
+  <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-lemon text-xl font-bold text-blue-300">
+    {number}
+  </span>
+
+  <div class="flex flex-col gap-3.5">
+    <h3 class:list={['text-2xl font-semibold leading-[1.3] transition-colors duration-300', titleColor]}>
+      {title}
+    </h3>
+    <p class:list={['text-base font-medium leading-[1.5] transition-colors duration-300', descColor]}>
+      {description}
+    </p>
+  </div>
+
+  <a
+    href={href}
+    class:list={[
+      'btn mt-auto self-start border bg-white py-2.5 pl-6 pr-2.5 text-lg text-blue-600 transition-colors duration-300',
+      btnBorder,
+    ]}
+  >
+    Saiba mais
+    <span
+      class:list={[
+        'inline-flex size-8 shrink-0 items-center justify-center rounded-full transition-colors duration-300',
+        arrowState,
+      ]}
+    >
+      <ArrowRight class="h-[18px] w-[18px]" />
+    </span>
+  </a>
+</article>

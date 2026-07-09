@@ -1,0 +1,17 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+const { eyebrow, title, subtitle, align = 'left', class: className = '' } = Astro.props;
+---
+<div class:list={['flex flex-col gap-4', align === 'center' && 'items-center text-center', className]}>
+  {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+  <h2 class="h2">{title}</h2>
+  {subtitle && <p class="body-lg max-w-[560px]">{subtitle}</p>}
+</div>

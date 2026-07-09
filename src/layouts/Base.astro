@@ -1,0 +1,228 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  preloadImage?: string;
+}
+
+const {
+  title = 'Salestime — Prospecção B2B previsível',
+  description = 'A Salestime ajuda empresas B2B a estruturar, implementar e acelerar operações de pré-vendas com método, tecnologia e governança.',
+  image = '/og-image.png',
+  canonical,
+  preloadImage,
+} = Astro.props;
+
+const siteUrl = 'https://www.salestime.com.br';
+const canonicalURL = canonical ?? new URL(Astro.url.pathname, siteUrl).href;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Salestime',
+  url: siteUrl,
+  description,
+  logo: `${siteUrl}/logo.svg`,
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
+
+    <!-- Fonts — carregamento assíncrono (não bloqueia a renderização) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      />
+    </noscript>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={new URL(image, siteUrl).href} />
+    <meta property="og:locale" content="pt_BR" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, siteUrl).href} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  </head>
+  <body class="min-h-screen bg-white font-sans text-gray-900 antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-white"
+    >
+      Ir para o conteúdo
+    </a>
+    <slot />
+
+    <script>
+      // ============================================================
+      // Animações de entrada da home:
+      // - Títulos (h1/h2): efeito de digitação palavra a palavra com
+      //   blur; o h1 do hero ganha um cursor que acompanha o texto.
+      // - Demais blocos: reveal com blur + slide, com stagger por seção.
+      // Tudo via IntersectionObserver; sem JS nada fica oculto.
+      // ============================================================
+      const SKIP = '[data-marquee], dialog, [aria-hidden="true"]';
+
+      // Quebra o texto do elemento em spans .tw preservando elementos
+      // internos (ex.: <span class="text-blue-600">Salestime</span>)
+      const splitWords = (el: Element) => {
+        const walk = (node: Node) => {
+          [...node.childNodes].forEach((child) => {
+            if (child.nodeType === Node.TEXT_NODE) {
+              const parts = (child.textContent ?? '').split(/(\s+)/);
+              const frag = document.createDocumentFragment();
+              parts.forEach((part) => {
+                if (!part) return;
+                if (/^\s+$/.test(part)) {
+                  frag.appendChild(document.createTextNode(part));
+                } else {
+                  const w = document.createElement('span');
+                  w.className = 'tw';
+                  w.textContent = part;
+                  frag.appendChild(w);
+                }
+              });
+              child.replaceWith(frag);
+            } else if (child.nodeType === Node.ELEMENT_NODE) {
+              walk(child);
+            }
+          });
+        };
+        walk(el);
+        return el.querySelectorAll<HTMLElement>('.tw');
+      };
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target as HTMLElement;
+            el.classList.add('is-in');
+            io.unobserve(el);
+
+            // Cursor do hero: pula de palavra em palavra e some no fim
+            const caret = el.querySelector<HTMLElement>('.type-caret');
+            if (caret) {
+              const words = [...el.querySelectorAll<HTMLElement>('.tw')];
+              let i = 0;
+              const tick = window.setInterval(() => {
+                if (i >= words.length) {
+                  window.clearInterval(tick);
+                  window.setTimeout(() => caret.classList.add('done'), 900);
+                  return;
+                }
+                words[i].after(caret);
+                i++;
+              }, 60);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
+      );
+
+      const prep = () => {
+        // Títulos com digitação
+        document
+          .querySelectorAll<HTMLElement>('main h1, main section h2')
+          .forEach((h) => {
+            if (h.closest(SKIP)) return;
+            h.setAttribute('data-typing', '');
+            splitWords(h).forEach((w, i) => w.style.setProperty('--wi', String(i)));
+            if (h.matches('.h1')) {
+              const caret = document.createElement('span');
+              caret.className = 'type-caret';
+              caret.setAttribute('aria-hidden', 'true');
+              h.appendChild(caret);
+            }
+            io.observe(h);
+          });
+
+        // Reveal dos demais blocos (cards inteiros, não os filhos)
+        const targets = document.querySelectorAll<HTMLElement>(
+          'main section :is(.eyebrow, p, .btn, img, article, form, details, blockquote, figcaption)'
+        );
+        let section: Element | null = null;
+        let i = 0;
+        targets.forEach((el) => {
+          if (el.closest(SKIP)) return;
+          if (el.closest('[data-typing]')) return;
+          // Já está dentro de um bloco que anima? (article/form/figcaption)
+          if (el.parentElement?.closest('[data-reveal]')) return;
+          const sec = el.closest('section');
+          if (sec !== section) {
+            section = sec;
+            i = 0;
+          }
+          el.setAttribute('data-reveal', '');
+          // Imagem LCP do hero: variante que não esconde a pintura
+          if (el.matches('img[fetchpriority="high"]')) el.classList.add('reveal-soft');
+          el.style.setProperty('--reveal-delay', `${Math.min(i * 70, 420)}ms`);
+          i++;
+          io.observe(el);
+        });
+
+        // Carrosséis horizontais: cards fora da tela nunca disparam o
+        // observer (viewport). Revela conforme entram durante o arraste.
+        document
+          .querySelectorAll<HTMLElement>('[data-carousel-track]')
+          .forEach((track) => {
+            let raf = 0;
+            const check = () => {
+              raf = 0;
+              track
+                .querySelectorAll<HTMLElement>('[data-reveal]:not(.is-in)')
+                .forEach((el) => {
+                  const r = el.getBoundingClientRect();
+                  if (r.left < window.innerWidth && r.right > 0) {
+                    el.classList.add('is-in');
+                    io.unobserve(el);
+                  }
+                });
+            };
+            track.addEventListener(
+              'scroll',
+              () => {
+                if (!raf) raf = requestAnimationFrame(check);
+              },
+              { passive: true }
+            );
+          });
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', prep);
+      } else {
+        prep();
+      }
+    </script>
+  </body>
+</html>

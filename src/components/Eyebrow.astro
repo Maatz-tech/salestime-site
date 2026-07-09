@@ -1,0 +1,10 @@
+---
+interface Props {
+  size?: 'sm' | 'lg';
+  class?: string;
+}
+const { size = 'sm', class: className = '' } = Astro.props;
+---
+<p class:list={['eyebrow', size === 'lg' && 'eyebrow--lg', className]}>
+  <slot />
+</p>

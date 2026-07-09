@@ -1,0 +1,109 @@
+---
+const logos = [
+  { src: '/images/logos/idopter.webp', alt: 'Idopter' },
+  { src: '/images/logos/vibe.svg', alt: 'Vibe' },
+  { src: '/images/logos/viraser.svg', alt: 'Viraser' },
+  { src: '/images/logos/tegra.webp', alt: 'Tegra' },
+  { src: '/images/logos/conviso.webp', alt: 'Conviso' },
+  { src: '/images/logos/edata.webp', alt: 'Edata' },
+  { src: '/images/logos/ezdevs.svg', alt: 'EZ.devs' },
+  { src: '/images/logos/solvis.svg', alt: 'Solvis' },
+];
+// Duplicado para o loop infinito ficar contínuo
+const loop = [...logos, ...logos];
+---
+
+<section class="bg-white py-8 lg:py-10" aria-label="Empresas que confiam na Salestime">
+  <div class="shell flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-16">
+    <p class="w-full shrink-0 text-lg font-medium leading-normal text-blue-900 lg:w-[228px]">
+      + 200 empresas confiam na Salestime
+    </p>
+    <div
+      data-marquee
+      class="min-w-0 flex-1 cursor-grab overflow-x-auto [scrollbar-width:none] active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+      style="-webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent); mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);"
+    >
+      <ul class="flex w-max select-none items-center gap-8">
+        {loop.map((logo, i) => (
+          <li
+            class="flex h-10 w-[128px] shrink-0 items-center justify-center"
+            aria-hidden={i >= logos.length ? 'true' : undefined}
+          >
+            <img
+              src={logo.src}
+              alt={i >= logos.length ? '' : logo.alt}
+              width="128"
+              height="40"
+              draggable="false"
+              loading="lazy"
+              class="max-h-10 w-auto object-contain"
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.querySelector<HTMLElement>('[data-marquee]');
+  if (track) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const speed = 1; // px por frame
+    let paused = false;
+    let dragging = false;
+    let startX = 0;
+    let startScroll = 0;
+    let moved = false;
+    let pos = 0; // acumulador float (scrollLeft pode ser arredondado p/ inteiro)
+
+    const half = () => track.scrollWidth / 2;
+
+    const tick = () => {
+      if (!paused && !dragging && half() > 0) {
+        pos += speed;
+        if (pos >= half()) pos -= half();
+        track.scrollLeft = pos;
+      }
+      requestAnimationFrame(tick);
+    };
+    if (!reduce) requestAnimationFrame(tick);
+
+    // Pausa no hover
+    track.addEventListener('mouseenter', () => (paused = true));
+    track.addEventListener('mouseleave', () => (paused = false));
+
+    // Arrastar com o mouse/touch
+    track.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      moved = false;
+      startX = e.pageX;
+      startScroll = track.scrollLeft;
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const delta = e.pageX - startX;
+      if (Math.abs(delta) > 3) moved = true;
+      let next = startScroll - delta;
+      // loop contínuo durante o arraste
+      if (next >= half()) next -= half();
+      if (next < 0) next += half();
+      track.scrollLeft = next;
+      pos = next; // sincroniza o acumulador
+    });
+    const endDrag = (e: PointerEvent) => {
+      if (!dragging) return;
+      dragging = false;
+      try {
+        track.releasePointerCapture(e.pointerId);
+      } catch {}
+    };
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    // Evita seguir link ao arrastar
+    track.addEventListener('click', (e) => {
+      if (moved) e.preventDefault();
+    });
+  }
+</script>

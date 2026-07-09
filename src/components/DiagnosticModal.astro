@@ -1,0 +1,197 @@
+---
+import ChevronDown from './icons/ChevronDown.astro';
+import Close from './icons/Close.astro';
+import EyebrowBadge from './EyebrowBadge.astro';
+
+const inputBase =
+  'w-full h-[43px] rounded-lg border border-gray-100 bg-white px-4 text-base text-blue-900 placeholder:text-blue-900/60 transition-colors focus:border-blue-300 focus:outline-none';
+
+const cargos = [
+  'CEO / Fundador(a)',
+  'Diretor(a) comercial',
+  'Gerente de vendas',
+  'SDR / BDR',
+  'Marketing',
+  'Outro',
+];
+const servicos = [
+  'Estratégia comercial',
+  'Consultoria de Vendas',
+  'Terceirização de SDR/BDR',
+  'Implementação de CRM',
+  'Ainda não sei',
+];
+const equipes = ['1 a 2', '3 a 5', '6 a 10', '11 a 20', 'Mais de 20'];
+---
+
+<dialog
+  id="diagnostic-modal"
+  aria-labelledby="diagnostic-modal-title"
+  class="diag-modal m-auto w-[calc(100%-2rem)] max-w-[656px] rounded-3xl bg-white p-0 shadow-[0px_12px_9px_rgba(0,0,0,0.05),0px_2px_2px_rgba(0,0,0,0.07)] backdrop:bg-blue-900/50 backdrop:backdrop-blur-sm"
+>
+  <form
+    class="relative flex max-h-[90vh] flex-col gap-8 overflow-y-auto p-6 sm:p-10"
+    action="#"
+    method="post"
+    data-form="diagnostico-modal"
+  >
+    <!-- TODO: definir endpoint real do formulário antes do deploy -->
+    <button
+      type="button"
+      data-close-modal
+      aria-label="Fechar"
+      class="absolute right-5 top-5 z-10 text-blue-900 transition-colors hover:text-blue-600"
+    >
+      <Close class="h-6 w-6" />
+    </button>
+
+    <div class="flex flex-col gap-3.5 pr-8">
+      <div class="flex items-center gap-3">
+        <EyebrowBadge tone="brand" />
+        <p class="eyebrow eyebrow--lg">Acelere suas vendas</p>
+      </div>
+      <h2 id="diagnostic-modal-title" class="text-[26px] font-semibold leading-[1.3] text-blue-900 sm:text-[28px]">
+        Agende um diagnóstico
+      </h2>
+    </div>
+
+    <div class="flex flex-col gap-6">
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="flex flex-col gap-3">
+          <label for="dm-nome" class="text-base text-blue-900">Nome <span class="text-[#ea4335]">*</span></label>
+          <input id="dm-nome" name="nome" type="text" required autocomplete="name" class={inputBase} />
+        </div>
+        <div class="flex flex-col gap-3">
+          <label for="dm-email" class="text-base text-blue-900">E-mail <span class="text-[#ea4335]">*</span></label>
+          <input id="dm-email" name="email" type="email" required autocomplete="email" placeholder="Digite seu e-mail" class={inputBase} />
+        </div>
+        <div class="flex flex-col gap-3">
+          <label for="dm-telefone" class="text-base text-blue-900">Telefone <span class="text-[#ea4335]">*</span></label>
+          <input id="dm-telefone" name="telefone" type="tel" required autocomplete="tel" placeholder="(99) 99999-9999" class={inputBase} />
+        </div>
+        <div class="flex flex-col gap-3">
+          <label for="dm-empresa" class="text-base text-blue-900">Empresa <span class="text-[#ea4335]">*</span></label>
+          <input id="dm-empresa" name="empresa" type="text" required autocomplete="organization" placeholder="Digite o nome da sua empresa" class={inputBase} />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <label for="dm-cargo" class="text-base text-blue-900">Qual é o seu cargo? <span class="text-[#ea4335]">*</span></label>
+        <div class="relative">
+          <select id="dm-cargo" name="cargo" required class={`${inputBase} appearance-none pr-10`}>
+            <option value="" disabled selected>Selecione</option>
+            {cargos.map((c) => <option value={c}>{c}</option>)}
+          </select>
+          <ChevronDown class="pointer-events-none absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 text-blue-900" />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <label for="dm-servico" class="text-base text-blue-900">Sobre qual serviço você quer falar? <span class="text-[#ea4335]">*</span></label>
+        <div class="relative">
+          <select id="dm-servico" name="servico" required class={`${inputBase} appearance-none pr-10`}>
+            <option value="" disabled selected>Selecione</option>
+            {servicos.map((s) => <option value={s}>{s}</option>)}
+          </select>
+          <ChevronDown class="pointer-events-none absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 text-blue-900" />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <label for="dm-equipe" class="text-base text-blue-900">Quantos vendedores(as) você tem na equipe? <span class="text-[#ea4335]">*</span></label>
+        <div class="relative">
+          <select id="dm-equipe" name="equipe" required class={`${inputBase} appearance-none pr-10`}>
+            <option value="" disabled selected>Selecione</option>
+            {equipes.map((e) => <option value={e}>{e}</option>)}
+          </select>
+          <ChevronDown class="pointer-events-none absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 text-blue-900" />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <label for="dm-mensagem" class="text-base text-blue-900">
+          Como você entende que podemos te ajudar? <span class="text-[#ea4335]">*</span>
+        </label>
+        <textarea
+          id="dm-mensagem"
+          name="mensagem"
+          required
+          rows="3"
+          placeholder="Digite..."
+          class="min-h-[100px] w-full resize-y rounded-lg border border-gray-100 bg-white px-4 py-3 text-base text-blue-900 placeholder:text-blue-900/60 transition-colors focus:border-blue-300 focus:outline-none"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn--primary w-full px-8 py-4 text-lg">
+        Solicitar diagnóstico
+      </button>
+
+      <p class="text-center text-sm font-normal text-gray-900">
+        Ao informar meus dados, estou ciente das diretrizes da
+        <a href="#privacidade" class="underline">Política de Privacidade.</a>
+      </p>
+    </div>
+  </form>
+</dialog>
+
+<style>
+  /* Animação de abertura/fechamento */
+  .diag-modal,
+  .diag-modal::backdrop {
+    transition: opacity 0.25s ease, transform 0.25s ease, overlay 0.25s ease allow-discrete,
+      display 0.25s ease allow-discrete;
+  }
+  .diag-modal {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  .diag-modal[open] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  @starting-style {
+    .diag-modal[open] {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+  }
+  .diag-modal::backdrop {
+    opacity: 0;
+  }
+  .diag-modal[open]::backdrop {
+    opacity: 1;
+  }
+  @starting-style {
+    .diag-modal[open]::backdrop {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .diag-modal,
+    .diag-modal::backdrop {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const modal = document.getElementById('diagnostic-modal') as HTMLDialogElement | null;
+  if (modal) {
+    const open = (e: Event) => {
+      e.preventDefault();
+      modal.showModal();
+    };
+    // Qualquer CTA de diagnóstico abre o modal
+    document
+      .querySelectorAll('[data-diagnostic], a[href="#diagnostico"]')
+      .forEach((el) => el.addEventListener('click', open));
+
+    // Fechar: botão X
+    modal.querySelector('[data-close-modal]')?.addEventListener('click', () => modal.close());
+
+    // Fechar ao clicar no backdrop (fora do form)
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.close();
+    });
+  }
+</script>

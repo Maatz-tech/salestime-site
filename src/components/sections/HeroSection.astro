@@ -1,0 +1,71 @@
+---
+import Button from '../Button.astro';
+import EyebrowBadge from '../EyebrowBadge.astro';
+import { ctaHref } from '../../data/site';
+---
+
+<section class="relative overflow-hidden bg-gray-50">
+  <!-- Grade decorativa (sutil, atrás da imagem) -->
+  <div
+    class="pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 opacity-60 lg:block"
+    style="
+      background-image:
+        linear-gradient(to right, rgba(208,213,221,.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(208,213,221,.35) 1px, transparent 1px);
+      background-size: 61px 61px;
+      -webkit-mask-image: radial-gradient(circle at 60% 55%, black, transparent 70%);
+      mask-image: radial-gradient(circle at 60% 55%, black, transparent 70%);
+    "
+    aria-hidden="true"
+  >
+  </div>
+
+  <!-- Swoosh decorativo: encostado na lateral direita, quase no header e até o fim -->
+  <img
+    src="/images/hero/hero-bg-vector.svg"
+    alt=""
+    aria-hidden="true"
+    width="736"
+    height="510"
+    class="pointer-events-none absolute right-0 top-4 hidden h-[calc(100%-1rem)] w-auto max-w-none opacity-60 lg:block"
+  />
+
+  <div class="shell relative grid items-center gap-8 lg:grid-cols-2">
+    <!-- Conteúdo -->
+    <div class="flex flex-col gap-8 pt-12 lg:max-w-[587px] lg:py-16">
+      <div class="flex flex-col gap-5">
+        <div class="flex items-center gap-3">
+          <EyebrowBadge tone="brand" />
+          <p class="eyebrow eyebrow--lg">Prospecção B2B previsível</p>
+        </div>
+        <div class="flex flex-col gap-3.5">
+          <h1 class="h1">Construa uma operação comercial escalável</h1>
+          <p class="body-lg">
+            A Salestime ajuda empresas B2B a estruturar, implementar e acelerar
+            operações de pré-vendas com método, tecnologia e governança.
+          </p>
+        </div>
+      </div>
+      <Button
+        href={ctaHref}
+        variant="primary"
+        icon
+        class="self-start"
+      >
+        Agende um diagnóstico
+      </Button>
+    </div>
+
+    <!-- Imagem (cards de destaque já compõem a arte) -->
+    <div class="relative z-10 mx-auto w-full max-w-[520px] self-end lg:max-w-[600px]">
+      <img
+        src="/images/hero/woman.webp"
+        alt="Consultora de vendas da Salestime sorrindo com um celular e cartões de resultados: faturamento +R$80k e +168 novos leads"
+        width="1100"
+        height="946"
+        fetchpriority="high"
+        class="relative z-10 block w-full object-contain"
+      />
+    </div>
+  </div>
+</section>

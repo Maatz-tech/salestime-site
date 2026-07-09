@@ -1,0 +1,49 @@
+---
+import ArrowRight from './icons/ArrowRight.astro';
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  icon?: boolean; // mostra seta em círculo (padrão do CTA principal)
+  type?: 'button' | 'submit';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  icon = false,
+  type = 'button',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+// Com ícone, o padding-right encolhe para acomodar o círculo (Figma: pl-24 pr-10 py-10)
+const iconPad = icon ? 'pl-6 pr-2.5 py-2.5' : '';
+const classes = ['btn', `btn--${variant}`, icon ? '' : `btn--${size}`, iconPad, className]
+  .filter(Boolean)
+  .join(' ');
+
+// Cor do círculo: branco em botão primário, azul nos demais
+const circleClasses =
+  variant === 'primary'
+    ? 'bg-white text-blue-600'
+    : 'bg-blue-600 text-white';
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class={classes}
+  {...href ? { href } : { type }}
+  {...rest}
+>
+  <slot />
+  {icon && (
+    <span class={`inline-flex items-center justify-center rounded-full size-8 shrink-0 ${circleClasses}`}>
+      <ArrowRight class="w-[18px] h-[18px]" />
+    </span>
+  )}
+</Tag>

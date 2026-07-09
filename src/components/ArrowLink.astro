@@ -1,0 +1,19 @@
+---
+import ArrowRight from './icons/ArrowRight.astro';
+
+interface Props {
+  href: string;
+  class?: string;
+}
+const { href, class: className = '' } = Astro.props;
+---
+<a
+  href={href}
+  class:list={[
+    'group inline-flex items-center gap-2 border-b border-blue-300 pb-1 text-lg font-bold text-blue-300 transition-colors hover:text-blue-900 hover:border-blue-900',
+    className,
+  ]}
+>
+  <ArrowRight class="h-5 w-5 transition-transform duration-200 motion-safe:group-hover:translate-x-1" />
+  <slot />
+</a>

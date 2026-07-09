@@ -1,0 +1,143 @@
+---
+import ChevronDown from '../icons/ChevronDown.astro';
+import EyebrowBadge from '../EyebrowBadge.astro';
+
+const inputBase =
+  'w-full h-[43px] rounded-lg border border-gray-100 bg-white px-4 text-base text-blue-900 placeholder:text-blue-900/60 transition-colors focus:border-blue-300 focus:outline-none';
+
+const cargos = [
+  'CEO / Fundador(a)',
+  'Diretor(a) comercial',
+  'Gerente de vendas',
+  'SDR / BDR',
+  'Marketing',
+  'Outro',
+];
+const faturamentos = [
+  'Até R$ 50 mil/mês',
+  'R$ 50 mil a R$ 100 mil/mês',
+  'R$ 100 mil a R$ 500 mil/mês',
+  'Acima de R$ 500 mil/mês',
+];
+---
+
+<section
+  id="diagnostico"
+  class="relative overflow-hidden py-16 lg:py-20"
+  style="background-image: linear-gradient(to left, #18137b, #0a0755);"
+>
+  <img
+    src="/images/cta/wave.svg"
+    alt=""
+    aria-hidden="true"
+    width="660"
+    height="629"
+    class="pointer-events-none absolute -left-14 bottom-[-198px] w-[660px] max-w-none"
+  />
+
+  <div class="shell relative flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
+    <!-- Copy -->
+    <div class="flex flex-col gap-8 text-center lg:w-[493px] lg:pt-6 lg:text-left">
+      <div class="flex flex-col gap-5">
+        <div class="flex items-center justify-center gap-3 lg:justify-start">
+          <EyebrowBadge tone="accent" />
+          <p class="whitespace-nowrap text-sm font-semibold uppercase leading-none tracking-[0.04em] text-lemon lg:text-lg">
+            A solução para sua operação
+          </p>
+        </div>
+        <h2 class="text-[24px] font-semibold leading-[1.4] text-white lg:text-[40px]">
+          Chegou a hora de ter um fluxo comercial previsível.
+        </h2>
+      </div>
+
+      <div class="flex items-center justify-center gap-4 border-t border-white/60 pt-5 lg:justify-start">
+        <img
+          src="/images/cta/avatars.webp"
+          alt=""
+          aria-hidden="true"
+          width="122"
+          height="44"
+          class="h-11 w-auto"
+        />
+        <p class="max-w-[188px] text-left text-base font-medium leading-[1.5] text-white">
+          Método validado em <strong class="font-bold">mais de 200 empresas.</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- Formulário -->
+    <form
+      class="flex w-full flex-col gap-6 rounded-3xl bg-white p-6 shadow-[0px_12px_9px_rgba(0,0,0,0.05),0px_2px_2px_rgba(0,0,0,0.07)] sm:p-10 lg:w-[620px]"
+      action="#"
+      method="post"
+      data-form="diagnostico"
+    >
+      <!-- TODO: definir endpoint real do formulário (Formspree / API) antes do deploy -->
+      <p class="text-center text-lg font-semibold leading-[1.3] text-blue-900 lg:text-left">
+        Preencha o formulário para receber um diagnóstico
+      </p>
+
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="flex flex-col gap-3">
+          <label for="nome" class="text-base text-blue-900">Nome <span class="text-[#ea4335]">*</span></label>
+          <input id="nome" name="nome" type="text" required autocomplete="name" class={inputBase} />
+        </div>
+        <div class="flex flex-col gap-3">
+          <label for="email" class="text-base text-blue-900">E-mail <span class="text-[#ea4335]">*</span></label>
+          <input id="email" name="email" type="email" required autocomplete="email" placeholder="Digite seu e-mail" class={inputBase} />
+        </div>
+        <div class="flex flex-col gap-3">
+          <label for="telefone" class="text-base text-blue-900">Telefone <span class="text-[#ea4335]">*</span></label>
+          <input id="telefone" name="telefone" type="tel" required autocomplete="tel" placeholder="(99) 99999-9999" class={inputBase} />
+        </div>
+        <div class="flex flex-col gap-3">
+          <label for="empresa" class="text-base text-blue-900">Empresa <span class="text-[#ea4335]">*</span></label>
+          <input id="empresa" name="empresa" type="text" required autocomplete="organization" placeholder="Digite o nome da sua empresa" class={inputBase} />
+        </div>
+        <div class="flex flex-col gap-3">
+          <label for="cargo" class="text-base text-blue-900">Qual é o seu cargo? <span class="text-[#ea4335]">*</span></label>
+          <div class="relative">
+            <select id="cargo" name="cargo" required class={`${inputBase} appearance-none pr-10 text-blue-900/60 valid:text-blue-900`}>
+              <option value="" disabled selected>Selecione</option>
+              {cargos.map((c) => <option value={c}>{c}</option>)}
+            </select>
+            <ChevronDown class="pointer-events-none absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 text-blue-900" />
+          </div>
+        </div>
+        <div class="flex flex-col gap-3">
+          <label for="faturamento" class="text-base text-blue-900">Faturamento mensal <span class="text-[#ea4335]">*</span></label>
+          <div class="relative">
+            <select id="faturamento" name="faturamento" required class={`${inputBase} appearance-none pr-10 text-blue-900/60 valid:text-blue-900`}>
+              <option value="" disabled selected>Selecione</option>
+              {faturamentos.map((f) => <option value={f}>{f}</option>)}
+            </select>
+            <ChevronDown class="pointer-events-none absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 text-blue-900" />
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <label for="mensagem" class="text-base text-blue-900">
+          Como você entende que podemos te ajudar? <span class="text-[#ea4335]">*</span>
+        </label>
+        <textarea
+          id="mensagem"
+          name="mensagem"
+          required
+          rows="3"
+          placeholder="Digite..."
+          class="min-h-[100px] w-full resize-y rounded-lg border border-gray-100 bg-white px-4 py-3 text-base text-blue-900 placeholder:text-blue-900/60 transition-colors focus:border-blue-300 focus:outline-none"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn--primary w-full px-8 py-3.5 text-lg">
+        Solicitar diagnóstico
+      </button>
+
+      <p class="text-sm font-normal text-gray-900">
+        Ao informar meus dados, estou ciente das diretrizes da
+        <a href="#privacidade" class="underline">Política de Privacidade.</a>
+      </p>
+    </form>
+  </div>
+</section>
