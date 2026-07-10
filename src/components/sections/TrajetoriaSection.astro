@@ -62,10 +62,10 @@ const steps = [
       <ul
         data-traj-track
         data-carousel-track
-        class="-mx-5 flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto scroll-pl-5 px-5 [scrollbar-width:none] lg:mx-0 lg:gap-[31px] lg:scroll-pl-0 lg:px-0 [&::-webkit-scrollbar]:hidden"
+        class="-mx-5 flex snap-x snap-mandatory items-stretch gap-9 overflow-x-auto scroll-pl-5 px-5 [scrollbar-width:none] lg:mx-0 lg:gap-[31px] lg:scroll-pl-0 lg:px-0 [&::-webkit-scrollbar]:hidden"
       >
         {steps.map((step, i) => (
-          <li class="flex w-[calc(100vw-40px)] max-w-[375px] shrink-0 snap-start lg:w-[375px]">
+          <li class="flex w-[calc(100vw-76px)] max-w-[375px] shrink-0 snap-start lg:w-[375px]">
             <article class:list={['traj-card flex flex-col gap-10 rounded-3xl p-8', i === 0 && 'is-active']}>
               <span class="flex size-10 items-center justify-center rounded-full bg-lemon text-xl font-bold text-blue-300" aria-hidden="true">
                 {i + 1}
