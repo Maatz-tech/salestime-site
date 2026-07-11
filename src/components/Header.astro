@@ -5,9 +5,10 @@ import MenuIcon from './icons/Menu.astro';
 import Close from './icons/Close.astro';
 import { mainNav, ctaLabel, ctaHref } from '../data/site';
 
-// Link ativo pela rota atual (links de âncora nunca ficam ativos fora da home)
+// Link ativo pela rota atual (links de âncora nunca ficam ativos fora da home);
+// seções com subpáginas (ex.: /blog/post) mantêm o item pai ativo
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isActive = (href: string) => href === path;
+const isActive = (href: string) => href === path || (href !== '/' && path.startsWith(`${href}/`));
 ---
 
 <header

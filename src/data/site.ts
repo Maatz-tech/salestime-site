@@ -5,8 +5,11 @@ export const mainNav = [
   { href: '/#servicos', label: 'Serviços', hasDropdown: true },
   { href: '/sobre', label: 'Sobre nós' },
   { href: '#carreiras', label: 'Carreiras' },
-  { href: '#blog', label: 'Blog' },
+  { href: '/blog', label: 'Blog' },
 ];
+
+// Categorias do blog — fonte única para o schema da collection e os filtros
+export const blogCategories = ['Estratégia', 'Prospecção', 'Pré-vendas', 'CRM', 'Gestão'] as const;
 
 export const ctaLabel = 'Agende um diagnóstico';
 export const ctaHref = '#diagnostico';
@@ -17,7 +20,7 @@ export const footerColumns = [
     links: [
       { href: '#metodo', label: 'Método' },
       { href: '#ferramentas', label: 'Ferramentas' },
-      { href: '#blog', label: 'Blog' },
+      { href: '/blog', label: 'Blog' },
       { href: '#materiais', label: 'Materiais' },
     ],
   },
