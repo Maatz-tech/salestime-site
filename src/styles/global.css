@@ -217,6 +217,13 @@
   opacity: 0;
   transform: translateY(18px);
   filter: blur(12px);
+}
+/* Dentro de carrosséis (overflow:auto) o translateY criaria scroll Y
+   interno no track — cards revelam só com fade + blur */
+[data-carousel-track] [data-reveal] {
+  transform: none;
+}
+[data-reveal] {
   transition:
     opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
