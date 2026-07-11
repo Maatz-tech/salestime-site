@@ -1,7 +1,6 @@
 ---
 title: "As métricas de pré-vendas que realmente importam"
 date: "2026-06-08"
-image: "/images/blog/cover-5.svg"
 category: "Gestão"
 tags: ["métricas", "gestão comercial", "pré-vendas"]
 summary: "Volume de atividades diz pouco. Estas são as métricas que usamos para diagnosticar e destravar operações de pré-vendas — e o que cada uma revela."

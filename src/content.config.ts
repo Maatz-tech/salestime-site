@@ -8,7 +8,7 @@ const blog = defineCollection({
     title: z.string(),
     date: z.string(),
     summary: z.string(),
-    image: z.string(),
+    image: z.string().default('/images/blog/cover-default.svg'),
     author: z.string().default('Felipe Traina'),
     authorRole: z.string().default('CEO Salestime'),
     authorImage: z.string().default('/images/blog/author-felipe.webp'),

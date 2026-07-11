@@ -1,7 +1,6 @@
 ---
 title: "Como estruturar um processo de prospecção B2B previsível"
 date: "2026-07-06"
-image: "/images/blog/cover-1.svg"
 category: "Prospecção"
 tags: ["prospecção", "outbound", "processo comercial"]
 summary: "Previsibilidade não vem de esforço, vem de processo. Veja o passo a passo que aplicamos para transformar prospecção em uma máquina de oportunidades."

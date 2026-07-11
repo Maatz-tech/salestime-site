@@ -1,7 +1,6 @@
 ---
 title: "Follow-up sem ser inconveniente: técnicas que mantêm o negócio vivo"
 date: "2026-05-25"
-image: "/images/blog/cover-7.svg"
 category: "Pré-vendas"
 tags: ["follow-up", "negociação", "vendas"]
 summary: "A maioria dos negócios não morre com um 'não' — morre no silêncio. Como fazer follow-up que agrega valor em vez de cobrar resposta."

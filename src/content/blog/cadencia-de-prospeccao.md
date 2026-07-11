@@ -1,7 +1,6 @@
 ---
 title: "Cadência de prospecção: o guia prático para gerar mais respostas"
 date: "2026-06-15"
-image: "/images/blog/cover-4.svg"
 category: "Prospecção"
 tags: ["cadência", "cold e-mail", "outbound"]
 summary: "Quantos toques, em quais canais e com que intervalo? Um guia direto para montar cadências que geram conversas — sem queimar sua lista."

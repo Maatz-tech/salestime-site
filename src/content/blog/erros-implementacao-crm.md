@@ -1,7 +1,6 @@
 ---
 title: "7 erros de implementação de CRM que travam suas vendas"
 date: "2026-06-22"
-image: "/images/blog/cover-3.svg"
 category: "CRM"
 tags: ["CRM", "implementação", "ferramentas"]
 summary: "O CRM deveria ser o motor da operação comercial, mas na maioria das empresas vira um repositório de dados desatualizados. Veja os erros mais comuns — e como evitá-los."

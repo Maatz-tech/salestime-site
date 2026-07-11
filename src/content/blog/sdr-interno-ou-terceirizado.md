@@ -1,7 +1,6 @@
 ---
 title: "SDR interno ou terceirizado: como tomar essa decisão"
 date: "2026-06-29"
-image: "/images/blog/cover-2.svg"
 category: "Pré-vendas"
 tags: ["SDR", "terceirização", "pré-vendas"]
 summary: "Contratar e treinar um time de pré-vendas do zero ou acelerar com uma operação terceirizada? Os critérios que usamos para orientar essa escolha."

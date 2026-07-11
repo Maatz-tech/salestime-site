@@ -1,7 +1,6 @@
 ---
 title: "ICP: como definir o perfil de cliente ideal da sua empresa"
 date: "2026-06-01"
-image: "/images/blog/cover-6.svg"
 category: "Estratégia"
 tags: ["ICP", "estratégia comercial", "segmentação"]
 summary: "Vender para todo mundo é o caminho mais rápido para não vender para ninguém. Um método objetivo para definir — com dados — quem é o seu cliente ideal."
