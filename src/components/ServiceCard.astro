@@ -77,4 +77,22 @@ const { id, number, title, description, href = '#', active = false } = Astro.pro
     background-color: var(--color-blue-600);
     color: var(--color-white);
   }
+
+  /* Hover em outro card "rouba" o destaque: o ativo aparece inativo */
+  :global([data-carousel-track]:has(.svc-card:hover)) .svc-card.is-active:not(:hover) {
+    background-color: var(--color-white);
+  }
+  :global([data-carousel-track]:has(.svc-card:hover)) .svc-card.is-active:not(:hover) .svc-title {
+    color: var(--color-blue-900);
+  }
+  :global([data-carousel-track]:has(.svc-card:hover)) .svc-card.is-active:not(:hover) .svc-desc {
+    color: var(--color-gray-900);
+  }
+  :global([data-carousel-track]:has(.svc-card:hover)) .svc-card.is-active:not(:hover) .svc-btn {
+    border-color: var(--color-gray-100);
+  }
+  :global([data-carousel-track]:has(.svc-card:hover)) .svc-card.is-active:not(:hover) .svc-arrow {
+    background-color: var(--color-gray-50);
+    color: var(--color-blue-600);
+  }
 </style>

@@ -95,12 +95,25 @@ const steps = [
     color: var(--color-gray-900);
     transition: color 0.3s ease;
   }
-  .traj-card.is-active {
+  .traj-card.is-active,
+  .traj-card:hover {
     background-color: var(--color-blue-600);
   }
   .traj-card.is-active .traj-title,
-  .traj-card.is-active .traj-body {
+  .traj-card.is-active .traj-body,
+  .traj-card:hover .traj-title,
+  .traj-card:hover .traj-body {
     color: var(--color-white);
+  }
+  /* Hover em outro card "rouba" o destaque: o ativo aparece inativo */
+  [data-traj-track]:has(.traj-card:hover) .traj-card.is-active:not(:hover) {
+    background-color: var(--color-gray-50);
+  }
+  [data-traj-track]:has(.traj-card:hover) .traj-card.is-active:not(:hover) .traj-title {
+    color: var(--color-blue-900);
+  }
+  [data-traj-track]:has(.traj-card:hover) .traj-card.is-active:not(:hover) .traj-body {
+    color: var(--color-gray-900);
   }
 </style>
 
