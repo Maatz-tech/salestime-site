@@ -2,17 +2,19 @@
 import ArrowRight from './icons/ArrowRight.astro';
 
 interface Props {
+  id?: string; // âncora do dropdown de serviços do menu
   number: number;
   title: string;
   description: string;
   href?: string;
   active?: boolean; // estado inicial; o carrossel move o destaque via .is-active
 }
-const { number, title, description, href = '#', active = false } = Astro.props;
+const { id, number, title, description, href = '#', active = false } = Astro.props;
 ---
 <article
+  id={id}
   class:list={[
-    'svc-card flex w-[300px] shrink-0 snap-start flex-col gap-12 rounded-3xl p-8 sm:w-[340px] lg:w-[375px]',
+    'svc-card flex w-[300px] shrink-0 snap-start scroll-mt-28 flex-col gap-12 rounded-3xl p-8 sm:w-[340px] lg:w-[375px]',
     active && 'is-active',
   ]}
 >

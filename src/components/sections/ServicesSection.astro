@@ -2,33 +2,7 @@
 import ServiceCard from '../ServiceCard.astro';
 import ArrowLeft from '../icons/ArrowLeft.astro';
 import ArrowRight from '../icons/ArrowRight.astro';
-
-const services = [
-  {
-    number: 1,
-    title: 'Estratégia comercial',
-    description:
-      'Método completo para estruturar, acelerar e escalar sua operação comercial com estratégia, tecnologia e execução assistida.',
-  },
-  {
-    number: 2,
-    title: 'Consultoria de Vendas',
-    description:
-      'Análise estratégica para corrigir gargalos, aumentar conversões e criar previsibilidade no funil de vendas.',
-  },
-  {
-    number: 3,
-    title: 'Terceirização de SDR/BDR',
-    description:
-      'Nossa equipe executa a prospecção utilizando processos validados para gerar oportunidades alinhadas ao seu ICP.',
-  },
-  {
-    number: 4,
-    title: 'Implementação de CRM',
-    description:
-      'Configuramos automações, dashboards e indicadores para que sua equipe tenha controle e capacidade de tomar decisões baseadas em dados.',
-  },
-];
+import { services } from '../../data/site';
 ---
 
 <section id="servicos" class="bg-gray-50 py-16 lg:py-20">
@@ -71,7 +45,7 @@ const services = [
       class="-mx-5 flex min-w-0 flex-1 cursor-grab snap-x snap-mandatory gap-[31px] overflow-x-auto scroll-pl-5 px-5 pb-2 select-none active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:scroll-pl-0 lg:px-0"
     >
       {services.map((s, i) => (
-        <ServiceCard number={s.number} title={s.title} description={s.description} active={i === 0} />
+        <ServiceCard id={s.slug} number={i + 1} title={s.title} description={s.description} active={i === 0} />
       ))}
     </div>
   </div>
@@ -86,12 +60,17 @@ const services = [
     const next = section.querySelector<HTMLButtonElement>('[data-carousel-next]');
     if (!track || !prev || !next) return;
 
-    const carousel = initCarousel({
-      track,
-      prev,
-      next,
-      cards: [...track.querySelectorAll<HTMLElement>('article')],
-    });
+    const cards = [...track.querySelectorAll<HTMLElement>('article')];
+    const carousel = initCarousel({ track, prev, next, cards });
+
+    // Âncora vinda do menu (/#slug-do-servico): destaca o card correspondente.
+    // O goTo espera o scroll nativo da âncora terminar para não ser atropelado.
+    const jumpToHash = () => {
+      const idx = cards.findIndex((c) => c.id && c.id === location.hash.slice(1));
+      if (idx >= 0) setTimeout(() => carousel.goTo(idx), 400);
+    };
+    window.addEventListener('hashchange', jumpToHash);
+    jumpToHash();
 
     // Arrastar com o mouse
     let dragging = false;
