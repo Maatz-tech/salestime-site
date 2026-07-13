@@ -237,15 +237,6 @@
   filter: none;
   will-change: auto;
 }
-/* Variante para a imagem LCP do hero: não esconde a pintura (Lighthouse) */
-[data-reveal].reveal-soft {
-  opacity: 1;
-  filter: blur(8px);
-}
-[data-reveal].reveal-soft.is-in {
-  filter: none;
-}
-
 /* Digitação: cada palavra do título surge em sequência com blur */
 [data-typing] .tw {
   display: inline-block;

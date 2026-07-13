@@ -168,16 +168,16 @@ const orgSchema = {
             io.observe(h);
           });
 
-        // Reveal dos demais blocos (cards inteiros, não os filhos)
+        // Reveal apenas de containers (cards/blocos inteiros, nunca os filhos)
         const targets = document.querySelectorAll<HTMLElement>(
-          'main section :is(.eyebrow, p, .btn, img, article, form, details, blockquote, figcaption)'
+          'main section :is(article, form, details, blockquote, [data-card])'
         );
         let section: Element | null = null;
         let i = 0;
         targets.forEach((el) => {
           if (el.closest(SKIP)) return;
           if (el.closest('[data-typing]')) return;
-          // Já está dentro de um bloco que anima? (article/form/figcaption)
+          // Já está dentro de um bloco que anima? (ex.: form dentro de card)
           if (el.parentElement?.closest('[data-reveal]')) return;
           const sec = el.closest('section');
           if (sec !== section) {
@@ -185,8 +185,6 @@ const orgSchema = {
             i = 0;
           }
           el.setAttribute('data-reveal', '');
-          // Imagem LCP do hero: variante que não esconde a pintura
-          if (el.matches('img[fetchpriority="high"]')) el.classList.add('reveal-soft');
           el.style.setProperty('--reveal-delay', `${Math.min(i * 70, 420)}ms`);
           i++;
           io.observe(el);

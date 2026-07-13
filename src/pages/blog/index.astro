@@ -38,7 +38,7 @@ const formatDate = (dateStr: string) =>
         aria-hidden="true"
         width="790"
         height="753"
-        class="pointer-events-none absolute right-0 top-[-176px] hidden w-[790px] max-w-none lg:block"
+        class="pointer-events-none absolute right-[-138px] top-[-176px] hidden h-[753px] w-[790px] max-w-none lg:block"
       />
       <div class="shell relative flex flex-col gap-5 py-14 lg:items-center lg:py-20 lg:text-center">
         <div class="flex items-center gap-3">
@@ -65,6 +65,7 @@ const formatDate = (dateStr: string) =>
       <div class="shell">
         <a
           href={`/blog/${featuredPost.id}`}
+          data-card
           class="group flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white transition-shadow duration-300 hover:shadow-[0px_12px_24px_rgba(10,7,85,0.08)] lg:flex-row"
         >
           <div class="overflow-hidden lg:w-1/2 lg:shrink-0">
