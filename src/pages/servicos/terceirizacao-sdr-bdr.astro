@@ -1,0 +1,148 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ServiceHero from '../../components/sections/servicos/ServiceHero.astro';
+import HeroStats from '../../components/sections/servicos/HeroStats.astro';
+import MetodoSection from '../../components/sections/servicos/MetodoSection.astro';
+import DesafiosGridSection from '../../components/sections/servicos/DesafiosGridSection.astro';
+import DiferencialSection from '../../components/sections/servicos/DiferencialSection.astro';
+import LogosSection from '../../components/sections/LogosSection.astro';
+import CtaFormSection from '../../components/sections/CtaFormSection.astro';
+import FaqSection from '../../components/sections/FaqSection.astro';
+import DiagnosticModal from '../../components/DiagnosticModal.astro';
+
+const icons = '/images/servicos/icons';
+
+const metodo = [
+  {
+    icon: `${icons}/analyse.svg`,
+    title: 'Diagnóstico e estruturação',
+    body: 'Mapeamos e documentamos sua oferta, ICP e gaps da operação atual para gerar reuniões com quem realmente tem perfil de compra.',
+    tag: 'Início rápido da operação',
+  },
+  {
+    icon: `${icons}/bullseye-step.svg`,
+    title: 'Execução que aprende e converte',
+    body: 'Nosso time de especialista prospecta pelo seu negócio, validando abordagens para seu time herdar um processo que já funciona.',
+    tag: 'Validação com seu mercado',
+  },
+  {
+    icon: `${icons}/growth-chart.svg`,
+    title: 'Gestão por resultado',
+    body: 'Gestão ativa da prospecção com um olhar consultivo, para você saber exatamente o que monitorar quando o processo for internalizado.',
+    tag: 'Processos escaláveis',
+  },
+  {
+    icon: `${icons}/check.svg`,
+    title: 'Conhecimento que fica',
+    body: 'Ao final do projeto, seu processo de prospecção está documentado, testado e validado, pronto para seu time assumir com autonomia.',
+    tag: 'Playbook de pré-vendas',
+  },
+];
+
+const desafios = [
+  {
+    icon: `${icons}/department-w.svg`,
+    title: 'Dificuldade de estruturar uma área de pré-vendas',
+    body: 'Closers dividindo energia com prospecção: menos tempo negociando, menos conversão.',
+  },
+  {
+    icon: `${icons}/clear-alt-w.svg`,
+    title: 'Funil de baixa conversão',
+    body: 'Closers dividindo energia com prospecção: menos tempo negociando, menos conversão.',
+  },
+  {
+    icon: `${icons}/chart-mixed-w.svg`,
+    title: 'Prospecção sem consistência',
+    body: 'Pipeline cheio num mês, vazio no outro, sem conseguir entender o que mudou.',
+  },
+  {
+    icon: `${icons}/calendar-x-w.svg`,
+    title: 'Reuniões chegando sem qualidade ou critério',
+    body: 'Agenda tomada por prospects fora do perfil e desgaste sem resultados.',
+  },
+  {
+    icon: `${icons}/empty-set-w.svg`,
+    title: 'Crescimento travado por falta de processo',
+    body: 'Novos clientes só chegam por indicação ou dependem de pessoas-chave do time para fechar.',
+  },
+  {
+    icon: `${icons}/issue-loupe-w.svg`,
+    title: 'Decisões comerciais sem estratégia',
+    body: 'CRM sem dados, sem histórico confiável para orientar decisões.',
+  },
+];
+
+const diferenciais = [
+  {
+    icon: `${icons}/check-circle-w.svg`,
+    title: 'Operação completa, não alocação',
+    body: 'Entregamos processo, playbook, tecnologia e gestão. Não apenas um profissional sem contexto.',
+  },
+  {
+    icon: `${icons}/bullseye-dif.svg`,
+    title: 'Previsibilidade, não volume de atividade',
+    body: 'Acompanhamos KPIs e ajustamos a operação continuamente para garantir reuniões qualificadas durante o projeto e depois do handoff.',
+  },
+  {
+    icon: `${icons}/rocket.svg`,
+    title: 'Seu time aprende junto com a operação',
+    body: 'A mentoria acontece ao longo do projeto — para seu time entender o processo enquanto ele é executado.',
+  },
+  {
+    icon: `${icons}/lightbulb.svg`,
+    title: 'Conhecimento que fica',
+    body: 'Ao final, você tem um processo validado, documentado e pronto para internalizar e manter o crescimento.',
+  },
+];
+---
+
+<Base
+  title="Terceirização de SDR/BDR — Salestime"
+  description="Estruturamos, executamos e validamos sua prospecção na prática para seu time assumir um processo que já funciona e continuar crescendo com autonomia."
+>
+  <Header />
+  <main id="main">
+    <ServiceHero
+      eyebrow="Terceirização de pré-venda e BDR"
+      title="Acelere sua prospecção ativa e construa um processo sustenta seu crescimento."
+      description="Estruturamos, executamos e validamos sua prospecção na prática para seu time assumir um processo que já funciona e continuar crescendo com autonomia."
+    >
+      <HeroStats
+        slot="visual"
+        image="/images/servicos/terc-hero.webp"
+        alt="Dupla de pré-vendas prospectando em frente ao laptop"
+      />
+    </ServiceHero>
+
+    <LogosSection />
+    <MetodoSection
+      eyebrow="Método Salestime Pro de terceirização de BDR"
+      title="Um projeto que gera resultado agora e autonomia para sempre."
+      description="A Salestime não aloca um BDR e some. A gente estrutura a operação, gera resultado para o seu time e te entrega o processo pronto e validado para internalizar."
+      items={metodo}
+    />
+    <DesafiosGridSection
+      eyebrow="Quando contratar a terceirização de pré-vendas"
+      title="Seu processo comercial não está acompanhando as metas do negócio?"
+      description="Se você reconhece algum desses cenários, o problema provavelmente não é esforço, é falta de processo e gestão."
+      items={desafios}
+    />
+    <DiferencialSection
+      eyebrow="Por que a Salestime é diferente de outras empresas"
+      title="Entregamos muito além da terceirização de BDR."
+      description="Estruturamos sua prospecção, geramos resultado e transferimos o processo para seu time. Assim, você cresce com autonomia."
+      image="/images/servicos/terc-dif-photo.webp"
+      imageAlt="Time de pré-vendas trabalhando em conjunto"
+      items={diferenciais}
+    />
+    <CtaFormSection
+      eyebrow="Fale com um especialista"
+      title="Sua empresa pronta para gerar oportunidades qualificadas com a Salestime"
+    />
+    <FaqSection />
+  </main>
+  <Footer />
+  <DiagnosticModal />
+</Base>

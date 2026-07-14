@@ -11,31 +11,29 @@ export const mainNav = [
 // Categorias do blog — fonte única para o schema da collection e os filtros
 export const blogCategories = ['Estratégia', 'Prospecção', 'Pré-vendas', 'CRM', 'Gestão'] as const;
 
-// Serviços — fonte única do carrossel da home e do dropdown do menu
-export const services = [
+// Serviços — fonte única do carrossel da home e do dropdown do menu.
+// `page` aponta para a página dedicada quando ela existe.
+export const services: { slug: string; title: string; description: string; page?: string }[] = [
   {
-    slug: 'estrategia-comercial',
-    title: 'Estratégia comercial',
+    slug: 'terceirizacao-sdr-bdr',
+    title: 'Terceirização de SDR/BDR',
     description:
-      'Método completo para estruturar, acelerar e escalar sua operação comercial com estratégia, tecnologia e execução assistida.',
+      'Nossa equipe executa a prospecção utilizando processos validados para gerar oportunidades alinhadas ao seu ICP.',
+    page: '/servicos/terceirizacao-sdr-bdr',
   },
   {
     slug: 'consultoria-de-vendas',
     title: 'Consultoria de Vendas',
     description:
       'Análise estratégica para corrigir gargalos, aumentar conversões e criar previsibilidade no funil de vendas.',
-  },
-  {
-    slug: 'terceirizacao-sdr-bdr',
-    title: 'Terceirização de SDR/BDR',
-    description:
-      'Nossa equipe executa a prospecção utilizando processos validados para gerar oportunidades alinhadas ao seu ICP.',
+    page: '/servicos/consultoria-de-vendas',
   },
   {
     slug: 'implementacao-de-crm',
     title: 'Implementação de CRM',
     description:
       'Configuramos automações, dashboards e indicadores para que sua equipe tenha controle e capacidade de tomar decisões baseadas em dados.',
+    page: '/servicos/implementacao-de-crm',
   },
 ];
 

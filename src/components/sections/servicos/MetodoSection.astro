@@ -1,0 +1,86 @@
+---
+interface Item {
+  icon: string;
+  title: string;
+  body: string;
+  tag: string;
+}
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  items: Item[];
+}
+const { eyebrow, title, description, items } = Astro.props;
+---
+
+<section id="metodo" class="bg-gray-50 py-16 lg:py-20">
+  <div class="shell flex flex-col gap-10">
+    <div class="flex flex-col gap-4 lg:items-center lg:text-center">
+      <p class="eyebrow eyebrow--lg text-blue-300">{eyebrow}</p>
+      <h2 class="max-w-[820px] text-[24px] font-semibold leading-[1.4] text-blue-900 lg:text-[36px]">
+        {title}
+      </h2>
+      <p class="max-w-[760px] text-lg font-normal leading-[1.5] text-gray-900">{description}</p>
+    </div>
+
+    <!-- Mobile: carrossel por arraste · Desktop: grid de 4 colunas -->
+    <ul class="-mx-5 flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-pl-5 px-5 [scrollbar-width:none] lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden">
+      {items.map((item, i) => (
+        <li class:list={[
+          'metodo-card flex w-[calc(100vw-76px)] max-w-[320px] shrink-0 snap-start flex-col justify-between gap-10 rounded-3xl p-6 lg:w-auto lg:max-w-none',
+          i === 0 && 'is-active',
+        ]}>
+          <span class="flex size-11 items-center justify-center rounded-full bg-lemon" aria-hidden="true">
+            <img src={item.icon} alt="" width="20" height="20" class="h-5 w-5" />
+          </span>
+          <div class="flex flex-col gap-3.5">
+            <h3 class="metodo-title text-2xl font-semibold leading-[1.3]">{item.title}</h3>
+            <p class="metodo-body text-base font-normal leading-[1.5]">{item.body}</p>
+          </div>
+          <span class="inline-flex items-center gap-2 self-start rounded-full border border-gray-100 bg-white px-4 py-2">
+            <span class="size-2 rounded-full bg-lemon" aria-hidden="true"></span>
+            <span class="text-sm font-semibold text-blue-600">{item.tag}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .metodo-card {
+    background-color: var(--color-white);
+    transition: background-color 0.3s ease;
+  }
+  .metodo-title {
+    color: var(--color-blue-900);
+    transition: color 0.3s ease;
+  }
+  .metodo-body {
+    color: var(--color-gray-900);
+    transition: color 0.3s ease;
+  }
+  .metodo-card.is-active,
+  .metodo-card:hover {
+    background-color: var(--color-blue-600);
+  }
+  .metodo-card.is-active .metodo-title,
+  .metodo-card:hover .metodo-title {
+    color: var(--color-lemon);
+  }
+  .metodo-card.is-active .metodo-body,
+  .metodo-card:hover .metodo-body {
+    color: var(--color-white);
+  }
+  /* Hover em outro card "rouba" o destaque: o ativo aparece inativo */
+  ul:has(.metodo-card:hover) .metodo-card.is-active:not(:hover) {
+    background-color: var(--color-white);
+  }
+  ul:has(.metodo-card:hover) .metodo-card.is-active:not(:hover) .metodo-title {
+    color: var(--color-blue-900);
+  }
+  ul:has(.metodo-card:hover) .metodo-card.is-active:not(:hover) .metodo-body {
+    color: var(--color-gray-900);
+  }
+</style>

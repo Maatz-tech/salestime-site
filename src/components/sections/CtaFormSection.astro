@@ -2,6 +2,15 @@
 import ChevronDown from '../icons/ChevronDown.astro';
 import EyebrowBadge from '../EyebrowBadge.astro';
 
+interface Props {
+  eyebrow?: string;
+  title?: string;
+}
+const {
+  eyebrow = 'A solução para sua operação',
+  title = 'Chegou a hora de ter um fluxo comercial previsível.',
+} = Astro.props;
+
 const inputBase =
   'w-full h-[43px] rounded-lg border border-gray-100 bg-white px-4 text-base text-blue-900 placeholder:text-blue-900/60 transition-colors focus:border-blue-300 focus:outline-none';
 
@@ -42,11 +51,11 @@ const faturamentos = [
         <div class="flex items-center justify-center gap-3 lg:justify-start">
           <EyebrowBadge tone="accent" />
           <p class="whitespace-nowrap text-sm font-semibold uppercase leading-none tracking-[0.04em] text-lemon lg:text-lg">
-            A solução para sua operação
+            {eyebrow}
           </p>
         </div>
         <h2 class="text-[24px] font-semibold leading-[1.4] text-white lg:text-[40px]">
-          Chegou a hora de ter um fluxo comercial previsível.
+          {title}
         </h2>
       </div>
 

@@ -139,7 +139,7 @@ const orgSchema = {
               const tick = window.setInterval(() => {
                 if (i >= words.length) {
                   window.clearInterval(tick);
-                  window.setTimeout(() => caret.classList.add('done'), 900);
+                  window.setTimeout(() => caret.classList.add('done'), 250);
                   return;
                 }
                 words[i].after(caret);

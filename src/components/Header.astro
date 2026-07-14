@@ -48,7 +48,7 @@ const isActive = (href: string) => href === path || (href !== '/' && path.starts
             >
               {services.map((s) => (
                 <a
-                  href={`/#${s.slug}`}
+                  href={s.page ?? `/#${s.slug}`}
                   class="block rounded-xl px-4 py-2.5 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 hover:text-blue-600"
                 >
                   {s.title}
@@ -134,7 +134,7 @@ const isActive = (href: string) => href === path || (href !== '/' && path.starts
           <div id="mobile-services" class="hidden flex-col gap-1 pb-1 pl-4">
             {services.map((s) => (
               <a
-                href={`/#${s.slug}`}
+                href={s.page ?? `/#${s.slug}`}
                 class="rounded-lg px-2 py-2.5 text-base font-medium text-gray-600 transition-colors hover:bg-blue-100/20 hover:text-blue-600"
               >
                 {s.title}

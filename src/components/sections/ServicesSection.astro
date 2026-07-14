@@ -45,7 +45,14 @@ import { services } from '../../data/site';
       class="-mx-5 flex min-w-0 flex-1 cursor-grab snap-x snap-mandatory gap-[31px] overflow-x-auto scroll-pl-5 px-5 pb-2 select-none active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:scroll-pl-0 lg:px-0"
     >
       {services.map((s, i) => (
-        <ServiceCard id={s.slug} number={i + 1} title={s.title} description={s.description} active={i === 0} />
+        <ServiceCard
+          id={s.slug}
+          number={i + 1}
+          title={s.title}
+          description={s.description}
+          href={s.page ?? '#'}
+          active={i === 0}
+        />
       ))}
     </div>
   </div>
@@ -72,7 +79,9 @@ import { services } from '../../data/site';
     window.addEventListener('hashchange', jumpToHash);
     jumpToHash();
 
-    // Arrastar com o mouse
+    // Arrastar com o mouse — a captura do ponteiro só começa depois do
+    // arraste real; capturar no pointerdown redirecionaria o clique para o
+    // track e os links dos cards nunca receberiam o evento
     let dragging = false;
     let startX = 0;
     let startScroll = 0;
@@ -82,13 +91,15 @@ import { services } from '../../data/site';
       moved = false;
       startX = e.pageX;
       startScroll = track.scrollLeft;
-      track.setPointerCapture(e.pointerId);
     });
     track.addEventListener('pointermove', (e) => {
       if (!dragging) return;
       const delta = e.pageX - startX;
-      if (Math.abs(delta) > 3) moved = true;
-      track.scrollLeft = startScroll - delta;
+      if (!moved && Math.abs(delta) > 3) {
+        moved = true;
+        track.setPointerCapture(e.pointerId);
+      }
+      if (moved) track.scrollLeft = startScroll - delta;
     });
     const endDrag = (e: PointerEvent) => {
       if (!dragging) return;

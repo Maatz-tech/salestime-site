@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ServiceHero from '../../components/sections/servicos/ServiceHero.astro';
+import HeroStats from '../../components/sections/servicos/HeroStats.astro';
+import ComoFuncionaSection from '../../components/sections/servicos/ComoFuncionaSection.astro';
+import QuandoContratarSection from '../../components/sections/servicos/QuandoContratarSection.astro';
+import LogosSection from '../../components/sections/LogosSection.astro';
+import CtaFormSection from '../../components/sections/CtaFormSection.astro';
+import FaqSection from '../../components/sections/FaqSection.astro';
+import DiagnosticModal from '../../components/DiagnosticModal.astro';
+
+const icons = '/images/servicos/icons';
+
+const steps = [
+  {
+    icon: `${icons}/analyse.svg`,
+    title: 'Diagnóstico',
+    body: 'Analisamos seu processo comercial atual para identificar gargalos, oportunidades e pontos de melhoria.',
+  },
+  {
+    icon: `${icons}/bullseye-step.svg`,
+    title: 'Planejamento',
+    body: 'Desenvolvemos uma estratégia comercial personalizada, alinhada aos objetivos e à realidade da sua empresa.',
+  },
+  {
+    icon: `${icons}/filter-list.svg`,
+    title: 'Estruturação',
+    body: 'Organizamos processos, funis, indicadores, ferramentas e rotinas para aumentar a eficiência da operação.',
+  },
+  {
+    icon: `${icons}/check.svg`,
+    title: 'Implementação e acompanhamento',
+    body: 'Apoiamos a execução das melhorias e monitoramos os resultados para garantir evolução contínua.',
+  },
+];
+
+const challenges = [
+  { icon: `${icons}/funil.svg`, label: 'Funis de baixa conversão' },
+  { icon: `${icons}/chart-mixed.svg`, label: 'Vendas sem previsibilidade' },
+  { icon: `${icons}/delete-user.svg`, label: 'Oportunidades desqualificadas' },
+  { icon: `${icons}/department.svg`, label: 'Processos desorganizados' },
+  { icon: `${icons}/not-found.svg`, label: 'CRM abandonado' },
+  { icon: `${icons}/bullseye.svg`, label: 'Metas difíceis de atingir' },
+];
+
+---
+
+<Base
+  title="Consultoria de Vendas — Salestime"
+  description="Identificamos os gargalos da sua operação e desenhamos processos eficientes com estratégia para alcançar os objetivos do seu negócio."
+>
+  <Header />
+  <main id="main">
+    <ServiceHero
+      eyebrow="Consultoria de vendas"
+      title="Escale suas vendas com previsibilidade"
+      description="Identificamos os gargalos da sua operação e desenhamos processos eficientes com estratégia para alcançar os objetivos do seu negócio."
+    >
+      <!-- Foto + cards flutuantes -->
+      <HeroStats
+        slot="visual"
+        image="/images/servicos/consultoria-hero.webp"
+        alt="Equipe comercial reunida analisando resultados em um laptop"
+      />
+    </ServiceHero>
+
+    <LogosSection />
+    <ComoFuncionaSection steps={steps} />
+    <QuandoContratarSection
+      description="Se a resposta for sim para um ou mais desses pontos, está na hora de contratar a Consultoria de Vendas Salestime e mudar esse cenário."
+      challenges={challenges}
+    />
+    <CtaFormSection
+      eyebrow="Fale com um especialista"
+      title="Sua empresa pronta para gerar oportunidades qualificadas com a Salestime"
+    />
+    <FaqSection />
+  </main>
+  <Footer />
+  <DiagnosticModal />
+</Base>
